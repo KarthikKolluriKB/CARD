@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper below."
+title: "CARD: Cross-component Audio Representation Distillation for Encoder-Free Audio Captioning"
+authors:
+  - family-names: Kolluri
+    given-names: Ganesh Pavan Kartikeya Bharadwaj
+    affiliation: University of Essex
+  - family-names: Zhang
+    given-names: Yuchen
+    affiliation: University of Essex
+  - family-names: Kampouridis
+    given-names: Michael
+    affiliation: University of Essex
+  - family-names: Shekhar
+    given-names: Ravi
+    affiliation: University of Essex
+license: Apache-2.0
+preferred-citation:
+  type: conference-paper
+  title: "CARD: Cross-component Audio Representation Distillation for Encoder-Free Audio Captioning"
+  authors:
+    - family-names: Kolluri
+      given-names: Ganesh Pavan Kartikeya Bharadwaj
+    - family-names: Zhang
+      given-names: Yuchen
+    - family-names: Kampouridis
+      given-names: Michael
+    - family-names: Shekhar
+      given-names: Ravi
+  collection-title: "Proceedings of the IEEE Spoken Language Technology Workshop (SLT)"
+  year: 2026
