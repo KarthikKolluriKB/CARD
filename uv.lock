@@ -243,7 +243,7 @@ wheels = [
 [[package]]
 name = "card"
 version = "1.0.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "aac-metrics" },
     { name = "accelerate" },
