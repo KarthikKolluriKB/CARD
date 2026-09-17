@@ -85,6 +85,9 @@ so the two phases can be studied separately.
 
 ## Quick start
 
+Try it without installing anything: listen to sample clips on the [demo page](https://huggingface.co/spaces/KarthikKB1998/CARD-Audio-Captioning), or caption
+your own audio in the [Colab notebook](https://colab.research.google.com/github/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning/blob/main/notebooks/CARD_demo.ipynb).
+
 ```bash
 pip install git+https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning
 ```

@@ -5,6 +5,8 @@ Official code and models for the IEEE SLT 2026 paper
 by Ganesh Pavan Kartikeya Bharadwaj Kolluri, Yuchen Zhang, Michael Kampouridis and Ravi Shekhar
 (University of Essex).
 
+Demo: [listen and compare captions](https://huggingface.co/spaces/KarthikKB1998/CARD-Audio-Captioning) | Run live: [Colab notebook](https://colab.research.google.com/github/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning/blob/main/notebooks/CARD_demo.ipynb)
+
 Models: [Hugging Face collection](https://huggingface.co/collections/KarthikKB1998/card-encoder-free-audio-captioning-ieee-slt-2026-6aab0d5d46f574fd376ff1d7)
 
 ## What CARD is
@@ -78,6 +80,10 @@ Three models from the paper are released on the Hugging Face Hub under
 Weights are being uploaded; a repo that is not yet visible will appear shortly.
 
 ## Quick start
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning/blob/main/notebooks/CARD_demo.ipynb)
+
+The notebook runs the model on a free Colab GPU with no local setup. To install locally:
 
 ```bash
 pip install git+https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning
