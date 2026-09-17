@@ -1,8 +1,9 @@
 """Build the Auto-ACD Phase 1 manifest on top of the WavCaps AudioSet_SL audio.
 
-Auto-ACD provides GPT-generated captions for AudioSet clips. No new audio is downloaded: its captions
-are attached to the AudioSet_SL clips already extracted by ``prepare_wavcaps.py``, one row per
-(clip, caption). Captions: ``train.csv`` of Hugging Face ``Loie/Auto-ACD`` (pinned revision).
+Auto-ACD provides automatically generated captions for AudioSet clips. No new audio is
+downloaded: its captions are attached to the AudioSet_SL clips already extracted by
+``prepare_wavcaps.py``, one row per (clip, caption). Captions: ``train.csv`` of Hugging Face
+``Loie/Auto-ACD`` (pinned revision).
 
 A clip is matched through the 11-character YouTube id in its WavCaps file name (``Y<id>.flac``),
 looked up as ``<id>``, ``Y<id>``, then ``<id>`` without leading dashes. With the full AudioSet_SL

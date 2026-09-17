@@ -1,0 +1,79 @@
+# CARD* (paper Table II, last row): cross-component distillation from a frozen CLAP-HTSAT teacher.
+#   audio projector <- teacher stages t0, t1 (perceptual)
+#   LLM blocks 0-11 <- teacher stages t2, t3 (semantic)
+# Phase 1 on the five-dataset mixture, Phase 2 on AudioCaps, then the adapters are merged.
+# Clotho uses the same Phase 1 checkpoint: configs/clotho/card_star.yaml.
+#
+#   bash scripts/launch_ddp.sh configs/card_star.yaml
+
+variant: card_star
+output_dir: outputs/card_star
+num_workers: 4
+
+model:
+  llm: Qwen/Qwen3-4B
+  teacher: laion/clap-htsat-fused
+  frontend: clap_processor        # 16 kHz -> 48 kHz, 64-band log-Mel from ClapProcessor
+  max_audio_sec: 10.0
+
+lora:
+  r: 16
+  alpha: 16
+  dropout: 0.0
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  num_layers: 36                  # all transformer blocks of Qwen3-4B
+
+distillation:
+  projector_stages: [0, 1]        # teacher stages supervising the audio projector (L_proj)
+  llm_stages: [2, 3]              # teacher stages supervising the LLM (L_llm)
+  llm_blocks: 12                  # lower LLM blocks shared among llm_stages by stage depth
+  projector_head_hidden: 768      # projector heads: 2560 -> 768 -> d_i
+  lambda_proj: 1.0
+  lambda_llm: 1.0
+
+phase1:
+  epochs: 1
+  batch_size: 4                   # per GPU; 4 x 8 x 2 GPUs = effective batch 64
+  grad_accum: 8
+  lr: 2.0e-4
+  betas: [0.9, 0.95]
+  weight_decay: 0.01              # AdamW default
+  scheduler: constant_with_warmup
+  warmup_steps: 200
+  grad_clip: 1.0
+  seed: 42                        # batch order
+  data:
+    - data/wavcaps/train.json
+    - data/autoacd/train.json
+    - data/audiocaps/train.json
+    - data/clotho/train.json
+    - data/macs/train.json
+  text_data:
+    - data/text_instructions/train.json
+  num_text_samples: 50000
+
+phase2:
+  dataset: audiocaps
+  epochs: 1
+  batch_size: 4
+  grad_accum: 8
+  lr: 2.0e-5
+  betas: [0.9, 0.95]
+  weight_decay: 0.01
+  scheduler: cosine
+  warmup_steps: 50
+  grad_clip: 1.0
+  seed: 43
+  data:
+    - data/audiocaps/train_expanded.json
+
+validation:                       # monitoring only; does not affect training
+  data: data/audiocaps/validation.json
+  every_steps: 1000
+  num_samples: 50
+  num_generations: 5
+
+wandb:
+  enabled: false
+  project: card
+  run_name: card_star

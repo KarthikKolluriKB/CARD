@@ -1,0 +1,17 @@
+# CARD* on Clotho: Phase 2 only, starting from the Phase 1 checkpoint of configs/card_star.yaml.
+#
+#   bash scripts/launch_ddp.sh configs/clotho/card_star.yaml --phase 2
+
+base: ../card_star.yaml
+output_dir: outputs/card_star_clotho
+
+phase2:
+  dataset: clotho
+  phase1_checkpoint: outputs/card_star/phase1/epoch-1
+  data:
+    - data/clotho/train_expanded.json
+
+validation: null
+
+wandb:
+  run_name: card_star_clotho
