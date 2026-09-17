@@ -67,7 +67,6 @@ with the AudioCaps model. Related repos:
 
 - `KarthikKB1998/CARD-Qwen3-4B-AudioCaps`: the same Phase 1 checkpoint fine-tuned on AudioCaps.
 - `KarthikKB1998/CARD-Qwen3-4B-Phase1`: the shared Phase 1 checkpoint (before Phase 2).
-- `KarthikKB1998/CARD-Ablations`: every encoder-free ablation of Table II as adapter bundles.
 
 ## What is in this repo
 
@@ -111,14 +110,13 @@ their first 10 s are captioned). Output is one English sentence. Decoding is bea
 `card_config.json`; `enable_thinking=False` is applied to the Qwen3 chat template.
 
 Requirements: `torch==2.7.1`, `transformers==4.53.1`, `peft==0.18.1` (only for `mode="adapters"`),
-`torchaudio`, `soundfile`. About 9 GB of GPU memory in bf16.
+`torchaudio`, `soundfile`. Peak GPU memory is 8.4 GB at batch 1 with beam 4 (paper Section IV-B).
 
 ## Results
 
-Clotho evaluation split (1,045 clips), beam 4, metrics x100 (paper Table II). Results are
-Phase-2-fine-tuned on the Clotho training set, not zero-shot. All rows share the frozen Qwen3-4B
-backbone, the CLAP-HTSAT teacher, the Phase 1 data and the r=16 all-linear LoRA; only the audio
-pathway and the distillation routing differ.
+Clotho evaluation split (1,045 clips), beam 4, all values in % (paper Table II). Results are
+Phase-2-fine-tuned on the Clotho training set, not zero-shot. SLAM-AAC keeps the frozen CLAP
+encoder at inference; the CARD variants remove it and differ only in where the teacher is distilled.
 
 | Model | Encoder at inference | CIDEr-D | SPIDEr | SPICE | METEOR |
 |---|---|---|---|---|---|
@@ -128,8 +126,9 @@ pathway and the distillation routing differ.
 | LLM Distill (teacher -> LLM only) | no | 22.5 | 15.1 | 8.4 | 13.0 |
 | No Distill | no | 22.3 | 15.5 | 8.6 | 13.0 |
 
-Differences between CARD\* and the encoder-free ablations are significant under a paired bootstrap
-over per-clip CIDEr-D (10,000 resamples). Metrics computed with `aac-metrics==0.5.4`.
+All numbers are as reported in the paper. CARD\*'s gains over no distillation, LLM-only
+distillation and mismatched projector supervision are statistically significant on both datasets
+(paired bootstrap over per-clip CIDEr-D, 10,000 resamples).
 
 ## Training summary
 
@@ -155,8 +154,7 @@ Model tree: `Qwen/Qwen3-4B` -> `CARD-Qwen3-4B-Phase1` -> **`CARD-Qwen3-4B-Clotho
 - Intended for research on encoder-free audio-language models and for captioning short
   environmental-sound clips in English. Not a speech recogniser: speech is described ("a man
   speaks"), not transcribed.
-- Trained on captions of 10 s windows; Clotho clips are longer and only their first 10 s are seen,
-  which is one reason Clotho scores are lower than AudioCaps scores for every model in the paper.
+- Trained on 10 s windows. Clotho clips are 15-30 s long and only their first 10 s are used.
 - The model inherits the biases of its caption datasets (Freesound-sourced Clotho, YouTube-sourced
   AudioCaps) and of the Qwen3-4B backbone. Captions can be wrong or generic; do not use for
   safety-critical monitoring.

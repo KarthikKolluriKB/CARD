@@ -42,35 +42,38 @@ At inference nothing of the teacher remains.
 
 ## Results
 
-CIDEr-D / SPIDEr / SPICE / METEOR (x100), beam search 4, paper Table II. Every row shares the
-frozen Qwen3-4B, the CLAP-HTSAT teacher, the Phase 1 data and the rank-16 all-linear LoRA; only
-the audio pathway and the distillation routing differ.
+Paper Table II: CIDEr-D / SPIDEr / SPICE / METEOR, all values in %, beam search 4. SLAM-AAC keeps
+the frozen CLAP encoder at inference; every CARD variant removes it.
 
-| Model | Encoder at inference | AudioCaps test | Clotho evaluation |
-|---|---|---|---|
-| SLAM-AAC recipe, CLAP encoder + LoRA (encoder-kept reference) | yes | 66.4 / 41.9 / 17.3 / 23.3 | 39.0 / 25.8 / 12.7 / 16.2 |
-| No Distill | no | 43.2 / 27.9 / 12.6 / 18.4 | 22.3 / 15.5 / 8.6 / 13.0 |
-| LLM Distill (all stages -> LLM) | no | 43.5 / 27.8 / 12.2 / 18.4 | 22.5 / 15.1 / 8.4 / 13.0 |
-| Proj Full (all stages -> projector) | no | 40.7 / 26.4 / 12.1 / 17.8 | 21.2 / 14.6 / 8.1 / 12.7 |
-| Proj Early (stages 0-1 -> projector) | no | 52.5 / 33.3 / 14.1 / 20.1 | 24.3 / 16.6 / 8.9 / 13.1 |
-| Reversed Routing | no | 50.0 / 31.8 / 13.5 / 19.3 | 22.8 / 15.9 / 9.0 / 13.2 |
-| CARD-diamond (all stages -> projector, 2-3 -> LLM) | no | 49.9 / 32.0 / 14.1 / 20.3 | 24.8 / 17.1 / 9.4 / 13.1 |
-| **CARD\*** (stages 0-1 -> projector, 2-3 -> LLM) | **no** | **55.4 / 35.2 / 15.1 / 21.2** | **27.5 / 18.8 / 10.1 / 14.2** |
+| Model | Variant | Encoder at inference | AudioCaps | Clotho |
+|---|---|---|---|---|
+| SLAM-AAC | No LoRA | yes | 59.8 / 38.7 / 17.5 / 23.7 | 32.0 / 22.3 / 12.2 / 16.4 |
+| SLAM-AAC | LoRA | yes | 66.4 / 41.9 / 17.3 / 23.3 | 39.0 / 25.8 / 12.7 / 16.2 |
+| CARD | No Distill (no teacher) | no | 43.2 / 27.9 / 12.6 / 18.4 | 22.3 / 15.5 / 8.6 / 13.0 |
+| CARD | LLM Distill (LLM only) | no | 43.5 / 27.8 / 12.2 / 18.4 | 22.5 / 15.1 / 8.4 / 13.0 |
+| CARD | Proj Full (all stages -> projector) | no | 40.7 / 26.4 / 12.1 / 17.8 | 21.2 / 14.6 / 8.1 / 12.7 |
+| CARD | Proj Early (early stages -> projector) | no | 52.5 / 33.3 / 14.1 / 20.1 | 24.3 / 16.6 / 8.9 / 13.1 |
+| CARD | Reversed Routing (early stages -> LLM, later stages -> projector) | no | 50.0 / 31.8 / 13.5 / 19.3 | 22.8 / 15.9 / 9.0 / 13.2 |
+| CARD | CARD-diamond (projector, all stages + LLM) | no | 49.9 / 32 / 14.1 / 20.3 | 24.8 / 17.1 / 9.4 / 13.1 |
+| CARD | **CARD\*** (projector, early stages + LLM) | no | **55.4 / 35.2 / 15.1 / 21.2** | **27.5 / 18.8 / 10.1 / 14.2** |
 
-Distilling into the LLM alone gains nothing over no teacher. Distilling into the projector helps
-only with the early, perceptual stages. Combining the two is best on both datasets, +12.2 CIDEr-D
-on AudioCaps and +5.2 on Clotho over the non-distilled model, with no encoder at inference.
+LLM-only distillation gives negligible gains over the non-distilled model, and projector-only
+distillation with the full teacher hierarchy degrades performance. Supervising the projector with the
+early teacher stages substantially improves it. Compared with No Distill, CARD\* improves CIDEr-D by
+12.2 percentage points on AudioCaps and 5.2 on Clotho, with no encoder at inference. Its gains over
+no distillation, LLM-only distillation and mismatched projector supervision are statistically
+significant on both datasets (paired bootstrap over per-clip CIDEr-D, 10,000 resamples).
 
 ## Pretrained models
 
-All repos are under [KarthikKB1998](https://huggingface.co/KarthikKB1998) on the Hugging Face Hub.
+Three models from the paper are released on the Hugging Face Hub under
+[KarthikKB1998](https://huggingface.co/KarthikKB1998).
 
 | Repo | What it is | Contents | Size |
 |---|---|---|---|
-| `CARD-Qwen3-4B-AudioCaps` | CARD\* after Phase 2 on AudioCaps (CIDEr-D 55.4) | merged LLM + projector + both LoRA adapters | 8.4 GB |
-| `CARD-Qwen3-4B-Clotho` | CARD\* after Phase 2 on Clotho (CIDEr-D 27.5) | merged LLM + projector + both LoRA adapters | 8.4 GB |
-| `CARD-Qwen3-4B-Phase1` | the shared Phase 1 checkpoint | Phase 1 LoRA + projector + distillation heads | 0.2 GB |
-| `CARD-Ablations` | every encoder-free row of Table II, `<variant>/<dataset>/` | Phase 1 + Phase 2 LoRA + projector per model | 0.3 GB each |
+| [`CARD-Qwen3-4B-AudioCaps`](https://huggingface.co/KarthikKB1998/CARD-Qwen3-4B-AudioCaps) | CARD\* after Phase 2 on AudioCaps (CIDEr-D 55.4) | merged LLM + projector + Phase 1 and Phase 2 LoRA adapters | 8.4 GB |
+| [`CARD-Qwen3-4B-Clotho`](https://huggingface.co/KarthikKB1998/CARD-Qwen3-4B-Clotho) | CARD\* after Phase 2 on Clotho (CIDEr-D 27.5) | merged LLM + projector + Phase 1 and Phase 2 LoRA adapters | 8.4 GB |
+| [`CARD-Qwen3-4B-Phase1`](https://huggingface.co/KarthikKB1998/CARD-Qwen3-4B-Phase1) | the shared Phase 1 checkpoint both models start from | Phase 1 LoRA adapter + projector + distillation heads | 0.2 GB |
 
 Weights are being uploaded; a repo that is not yet visible will appear shortly.
 
@@ -99,15 +102,9 @@ Rebuild the merged weights from `Qwen/Qwen3-4B` and the two adapters instead of 
 model = load_card("KarthikKB1998/CARD-Qwen3-4B-AudioCaps", mode="adapters", device="cuda")
 ```
 
-Ablations live in subfolders of one repo:
-
-```python
-model = load_card("KarthikKB1998/CARD-Ablations", subfolder="proj_early/audiocaps", mode="adapters")
-```
-
 Requirements: Python 3.10+, `torch==2.7.1`, `transformers==4.53.1`, `peft==0.18.1` (adapters mode
 only), `torchaudio`, `soundfile`. The pinned environment is in `pyproject.toml` / `uv.lock`
-(`uv sync`). About 9 GB of GPU memory in bf16.
+(`uv sync`). Peak GPU memory is 8.4 GB at batch 1 with beam 4.
 
 ## Repository layout
 

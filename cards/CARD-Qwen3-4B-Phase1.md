@@ -36,10 +36,9 @@ two deployed models:
 - `KarthikKB1998/CARD-Qwen3-4B-AudioCaps` (Phase 2 on AudioCaps, CIDEr-D 55.4)
 - `KarthikKB1998/CARD-Qwen3-4B-Clotho` (Phase 2 on Clotho, CIDEr-D 27.5)
 
-Use this repo if you want to run your own Phase 2 on a new captioning dataset, study the
-distillation heads, or reproduce the zero-shot audio question answering result below. For plain
-captioning, use one of the Phase 2 repos: the Phase 1 model alone has not been adapted to the
-caption format and scores only 10.3 CIDEr-D on AudioCaps (paper Table IV).
+Use this repo as a starting point for your own Phase 2 fine-tuning or to study the distillation
+heads. For plain captioning, use one of the Phase 2 repos: the Phase 1 model alone has not been
+adapted to the caption format and scores only 10.3 CIDEr-D on AudioCaps (paper Table IV).
 
 ## What is in this repo
 
@@ -68,16 +67,14 @@ model = load_card("KarthikKB1998/CARD-Qwen3-4B-Phase1", mode="adapters", device=
 print(model.caption("clip.wav"))   # works, but see the note above: Phase 2 models caption far better
 ```
 
-Running Phase 2 on your own data starts from this checkpoint; see the training README in the code
-repository (`--phase 2 --phase1-run ...`).
+Training code for running Phase 2 from this checkpoint will be released in the code repository.
 
 Requirements: `torch==2.7.1`, `transformers==4.53.1`, `peft==0.18.1`, `torchaudio`, `soundfile`.
 
 ## Results
 
-Paper Section IV-C, "Generalization beyond captioning": binary Clotho-AQA zero-shot accuracy. No
-checkpoint sees any QA data. The Phase 1 model is scored by comparing the likelihood of the two
-answers under the same prompt.
+Paper Section IV-C, "Generalization beyond captioning": binary Clotho-AQA zero-shot accuracy (%).
+No checkpoint sees QA data at any stage.
 
 | Model | Clotho-AQA (binary, zero-shot) |
 |---|---|
@@ -88,7 +85,8 @@ answers under the same prompt.
 | Phase 2 fine-tuned on Clotho-AQA (reference) | 80.72 |
 
 Captioning with this checkpoint alone (paper Table IV, "Phase 1 Only"): AudioCaps CIDEr-D 10.3,
-Clotho 6.3. Phase 1 transfers audio competence; Phase 2 supplies the caption format.
+Clotho 6.3. Phase 1 transfers acoustic knowledge from the teacher, while Phase 2 adapts the model
+for caption generation.
 
 ## Training summary
 

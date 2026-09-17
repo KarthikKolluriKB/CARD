@@ -67,7 +67,6 @@ Table II in the paper. Related repos:
 
 - `KarthikKB1998/CARD-Qwen3-4B-Clotho`: the same Phase 1 checkpoint fine-tuned on Clotho.
 - `KarthikKB1998/CARD-Qwen3-4B-Phase1`: the shared Phase 1 checkpoint (before Phase 2).
-- `KarthikKB1998/CARD-Ablations`: every encoder-free ablation of Table II as adapter bundles.
 
 ## What is in this repo
 
@@ -111,13 +110,12 @@ captioning system prompt stored in `card_config.json`; `enable_thinking=False` i
 Qwen3 chat template.
 
 Requirements: `torch==2.7.1`, `transformers==4.53.1`, `peft==0.18.1` (only for `mode="adapters"`),
-`torchaudio`, `soundfile`. About 9 GB of GPU memory in bf16.
+`torchaudio`, `soundfile`. Peak GPU memory is 8.4 GB at batch 1 with beam 4 (paper Section IV-B).
 
 ## Results
 
-AudioCaps test, beam 4, metrics x100 (paper Table II). All rows share the frozen Qwen3-4B backbone,
-the CLAP-HTSAT teacher, the Phase 1 data and the r=16 all-linear LoRA; only the audio pathway and
-the distillation routing differ.
+AudioCaps test, beam 4, all values in % (paper Table II). SLAM-AAC keeps the frozen CLAP encoder at
+inference; the CARD variants remove it and differ only in where the teacher is distilled.
 
 | Model | Encoder at inference | CIDEr-D | SPIDEr | SPICE | METEOR |
 |---|---|---|---|---|---|
@@ -127,9 +125,9 @@ the distillation routing differ.
 | LLM Distill (teacher -> LLM only) | no | 43.5 | 27.8 | 12.2 | 18.4 |
 | No Distill | no | 43.2 | 27.9 | 12.6 | 18.4 |
 
-Differences between CARD\* and the encoder-free ablations are significant under a paired bootstrap
-over per-clip CIDEr-D (10,000 resamples). Numbers were computed on the AudioCaps test split
-described in the paper (Section IV-A) with `aac-metrics==0.5.4`.
+All numbers are as reported in the paper. CARD\*'s gains over no distillation, LLM-only
+distillation and mismatched projector supervision are statistically significant on both datasets
+(paired bootstrap over per-clip CIDEr-D, 10,000 resamples).
 
 ## Training summary
 
