@@ -116,6 +116,7 @@ scripts/
   export_to_hub.py   training output -> Hub repo folder (safetensors, configs, model card, checksums, self-checks)
   upload_to_hub.py   push an exported folder to the Hub
 cards/               model cards published with each Hub repo
+space/               Gradio demo Space: app, sample-clip builder, deploy script
 tests/               offline unit tests (python -m pytest -q)
 ```
 
