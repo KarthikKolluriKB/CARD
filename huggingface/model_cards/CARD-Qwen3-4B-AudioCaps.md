@@ -49,6 +49,8 @@ model-index:
             value: 21.2
 ---
 
+![CARD: encoder-free audio captioning](assets/card-banner.png)
+
 # CARD-Qwen3-4B-AudioCaps
 
 Encoder-free audio captioning model from the paper
@@ -67,6 +69,12 @@ Table II in the paper. Related repos:
 
 - `KarthikKB1998/CARD-Qwen3-4B-Clotho`: the same Phase 1 checkpoint fine-tuned on Clotho.
 - `KarthikKB1998/CARD-Qwen3-4B-Phase1`: the shared Phase 1 checkpoint (before Phase 2).
+
+![CARD training and inference pipelines](assets/card_architecture.png)
+
+*CARD training (left) and inference (right) pipelines (paper Fig. 1). A frozen CLAP teacher's early,
+perceptual stages are distilled into the audio projector and its later, semantic stages into the
+LLM's LoRA adapters; at inference only the projector and the merged LLM remain.*
 
 ## What is in this repo
 

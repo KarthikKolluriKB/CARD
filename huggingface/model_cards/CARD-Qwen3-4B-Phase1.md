@@ -21,6 +21,8 @@ datasets:
   - BAAI/Infinity-Instruct
 ---
 
+![CARD: encoder-free audio captioning](assets/card-banner.png)
+
 # CARD-Qwen3-4B-Phase1
 
 The **Phase 1 checkpoint** of CARD\* from the paper
@@ -39,6 +41,12 @@ two deployed models:
 Use this repo as a starting point for your own Phase 2 fine-tuning or to study the distillation
 heads. For plain captioning, use one of the Phase 2 repos: the Phase 1 model alone has not been
 adapted to the caption format and scores only 10.3 CIDEr-D on AudioCaps (paper Table IV).
+
+![CARD training and inference pipelines](assets/card_architecture.png)
+
+*CARD training (left) and inference (right) pipelines (paper Fig. 1). A frozen CLAP teacher's early,
+perceptual stages are distilled into the audio projector and its later, semantic stages into the
+LLM's LoRA adapters; at inference only the projector and the merged LLM remain.*
 
 ## What is in this repo
 
