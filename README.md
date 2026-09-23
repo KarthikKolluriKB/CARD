@@ -115,20 +115,33 @@ only), `torchaudio`, `soundfile`. The pinned environment is in `pyproject.toml` 
 ## Repository layout
 
 ```
+train.py             entry point: Phase 1, Phase 2, and merging the LoRA adapters
 card/
   modeling.py        AudioProjector, CLAP-matched and legacy mel front ends, hybrid attention mask, audio loading
+  model.py           the student: audio projector + LoRA-adapted LLM
+  teacher.py         frozen CLAP-HTSAT teacher (stages t0-t3)
+  heads.py           projector heads and LLM heads used for distillation in Phase 1
+  losses.py          L_proj and L_llm
+  data.py            manifests, prompts, batch sampler, collation
+  training.py        Phase 1, Phase 2, checkpointing, merging
+  config.py          YAML configs
   hub.py             load_card(): merged or adapter-rebuilt models from the Hub or a local folder
+configs/             training configs (card_star.yaml, clotho/card_star.yaml)
 scripts/
+  data/              dataset downloads and manifest builders
+  launch_ddp.sh      2-GPU launcher for train.py
+huggingface/         everything about the published models and the demo
   export_to_hub.py   training output -> Hub repo folder (safetensors, configs, model card, checksums, self-checks)
   upload_to_hub.py   push an exported folder to the Hub
-cards/               model cards published with each Hub repo
-space/               Gradio demo Space: app, sample-clip builder, deploy script
+  verify_captions.py check a model reproduces an earlier evaluation clip by clip
+  model_cards/       model cards published with each Hub repo
+  space/             demo Space: page, sample-clip builder, deploy script
+notebooks/           Colab demo
 tests/               offline unit tests (python -m pytest -q)
 ```
 
-Training and evaluation code (Phase 1 cross-component distillation, Phase 2 fine-tuning, LoRA
-merging, AudioCaps / Clotho evaluation with `aac-metrics`) is being cleaned up for release and will
-be added here.
+Evaluation code (AudioCaps / Clotho with `aac-metrics`) is being cleaned up for release and will be
+added here.
 
 ## Citation
 

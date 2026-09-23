@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 """Assemble the demo Space and upload it to the Hub.
 
-Two kinds of Space share the same sample clips (``space/samples``, built by build_samples.py):
+Two kinds of Space share the same sample clips (``huggingface/space/samples``, built by build_samples.py):
 
-    static  (default, free for every account)  space/static/index.html + README.md. Shows the caption
+    static  (default, free for every account)  static/index.html + README.md. Shows the caption
             the released model produced for each clip (``expected_caption`` in samples.json).
-    gradio  (needs a PRO account on Hugging Face)  space/app.py + the ``card`` package; generates
+    gradio  (needs a PRO account on Hugging Face)  app.py + the ``card`` package; generates
             captions live.
 
-    python space/deploy_space.py --space-id KarthikKB1998/CARD-Audio-Captioning --private
-    python space/deploy_space.py --space-id KarthikKB1998/CARD-Audio-Captioning --dry-run
-    python space/deploy_space.py --kind gradio --space-id KarthikKB1998/CARD-Audio-Captioning-Live
+    python huggingface/space/deploy_space.py --space-id KarthikKB1998/CARD-Audio-Captioning --private
+    python huggingface/space/deploy_space.py --space-id KarthikKB1998/CARD-Audio-Captioning --dry-run
+    python huggingface/space/deploy_space.py --kind gradio --space-id KarthikKB1998/CARD-Audio-Captioning-Live
 
 If ``samples/samples.json`` exists locally, the samples folder is uploaded and replaces the samples
 already in the Space. Without a local samples folder the Space's existing samples are left alone, so
@@ -27,7 +27,7 @@ import tempfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-REPO_ROOT = HERE.parent
+REPO_ROOT = HERE.parents[1]
 
 
 def stage_code(dest: Path, kind: str) -> None:

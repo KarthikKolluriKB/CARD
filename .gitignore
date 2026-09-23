@@ -35,4 +35,4 @@ results/
 Thumbs.db
 
 # Demo Space sample clips (built on the machine that holds the audio)
-space/samples/
+huggingface/space/samples/

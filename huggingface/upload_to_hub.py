@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Upload an exported CARD folder to the Hugging Face Hub.
 
-    python scripts/upload_to_hub.py --folder hub/CARD-Qwen3-4B-AudioCaps \\
+    python huggingface/upload_to_hub.py --folder hub/CARD-Qwen3-4B-AudioCaps \\
         --repo KarthikKB1998/CARD-Qwen3-4B-AudioCaps [--private] [--dry-run]
 
 Authentication: ``hf auth login`` beforehand, or export ``HF_TOKEN``. The token is never
@@ -33,7 +33,7 @@ def main(argv=None) -> int:
     if not folder.is_dir():
         raise SystemExit(f"{folder} is not a directory")
     if not (folder / "MANIFEST.sha256").exists():
-        raise SystemExit("MANIFEST.sha256 missing: run scripts/export_to_hub.py first")
+        raise SystemExit("MANIFEST.sha256 missing: run export_to_hub.py first")
     pickles = [str(q.relative_to(folder)) for q in folder.rglob("*")
                if q.is_file() and q.suffix in (".pt", ".pth", ".bin", ".ckpt", ".pkl")]
     if pickles:

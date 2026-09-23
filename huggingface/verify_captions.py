@@ -6,7 +6,7 @@ must produce exactly the same caption for every clip. This loads the model with
 ``card.load_card`` (an export folder or a Hub repo) and compares its captions with the
 ``results`` list of an ``eval_results.json`` written by that evaluation.
 
-    CUDA_VISIBLE_DEVICES=1 python scripts/verify_captions.py \\
+    CUDA_VISIBLE_DEVICES=1 python huggingface/verify_captions.py \\
         --model ~/Karthik/hub/CARD-Qwen3-4B-Clotho \\
         --eval-results ../outputs/aora_split_r16_clotho_ft/merged/eval_results.json
 

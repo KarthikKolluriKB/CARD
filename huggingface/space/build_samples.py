@@ -1,19 +1,19 @@
 #!/usr/bin/env python
-"""Pick sample clips for the demo Space and write space/samples/ (audio + samples.json).
+"""Pick sample clips for the demo Space and write huggingface/space/samples/ (audio + samples.json).
 
 Run on the machine that holds the test audio. Two steps:
 
 1. List good candidates from an evaluation run (ranked by word overlap between the model's
    caption and the closest human reference):
 
-    python space/build_samples.py \\
+    python huggingface/space/build_samples.py \\
         --manifest /mnt/storage/datasets/kk/audiocaps/test_multiref.json \\
         --eval-results outputs/aora_split_stage_2_2_r_16_a_16/merged/eval_results.json \\
         --suggest 20
 
 2. Copy the chosen clips and write samples.json:
 
-    python space/build_samples.py \\
+    python huggingface/space/build_samples.py \\
         --manifest /mnt/storage/datasets/kk/audiocaps/test_multiref.json \\
         --eval-results outputs/aora_split_stage_2_2_r_16_a_16/merged/eval_results.json \\
         --pick <clip1> <clip2> <clip3> --names "Dog and traffic" "Rain" "Train horn" \\

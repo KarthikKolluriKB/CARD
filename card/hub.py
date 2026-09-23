@@ -1,6 +1,6 @@
 """Load CARD models from the Hugging Face Hub (or a local export folder).
 
-Repository layout (see ``scripts/export_to_hub.py``)::
+Repository layout (see ``huggingface/export_to_hub.py``)::
 
     card_config.json               model hyper-parameters, prompt and decoding settings
     generation_config.json         beam search 4, 40 new tokens, no sampling
@@ -349,7 +349,7 @@ def load_card(
             the PEFT adapters found in the repo). A repo without ``llm/`` falls back to adapters.
         device: defaults to CUDA when available.
         dtype: LLM dtype; the projector always runs in fp32 and casts its output.
-        subfolder: for multi-model repos such as ``CARD-Ablations`` (``"proj_early/audiocaps"``).
+        subfolder: for a model stored in a subfolder of the repo (``"proj_early/audiocaps"``).
         base_llm: override the base model id stored in ``card_config.json``.
     """
     if mode not in ("merged", "adapters"):

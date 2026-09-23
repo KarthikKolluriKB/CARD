@@ -26,25 +26,22 @@ Output: a folder that ``card.hub.load_card`` and the model card expect::
 Examples::
 
     # headline CARD* AudioCaps, full merged model, verify, no upload
-    python scripts/export_to_hub.py \\
+    python huggingface/export_to_hub.py \\
         --run outputs/card_star_audiocaps --out hub/CARD-Qwen3-4B-AudioCaps \\
         --variant card_star --phase 2 --dataset audiocaps --include-merged \\
-        --readme cards/CARD-Qwen3-4B-AudioCaps.md \\
+        --readme huggingface/model_cards/CARD-Qwen3-4B-AudioCaps.md \\
         --check-merge --check-audio samples/*.wav --expected-captions samples/expected.json
 
     # Phase 2 fork whose Phase 1 checkpoint lives in another run
-    python scripts/export_to_hub.py --run outputs/card_star_clotho --phase1-run outputs/card_star_audiocaps \\
+    python huggingface/export_to_hub.py --run outputs/card_star_clotho --phase1-run outputs/card_star_audiocaps \\
         --out hub/CARD-Qwen3-4B-Clotho --variant card_star --phase 2 --dataset clotho --include-merged
 
     # Phase 1 checkpoint only
-    python scripts/export_to_hub.py --run outputs/card_star_audiocaps --out hub/CARD-Qwen3-4B-Phase1 \\
+    python huggingface/export_to_hub.py --run outputs/card_star_audiocaps --out hub/CARD-Qwen3-4B-Phase1 \\
         --variant card_star --phase 1
 
     # ablation bundle (adapters only) into a subfolder of the shared ablations repo
-    python scripts/export_to_hub.py --run outputs/proj_early_audiocaps \\
-        --out hub/CARD-Ablations/proj_early/audiocaps --variant proj_early --phase 2 --dataset audiocaps
-
-Nothing here talks to the Hub. Upload with ``scripts/upload_to_hub.py`` once the checks pass.
+Nothing here talks to the Hub. Upload with ``upload_to_hub.py`` once the checks pass.
 """
 
 from __future__ import annotations
