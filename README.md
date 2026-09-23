@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo/card-lockup-dark.svg">
+    <img src="assets/logo/card-lockup.svg" alt="CARD: encoder-free audio captioning" width="440">
+  </picture>
+</p>
+
 # CARD: Cross-component Audio Representation Distillation for Encoder-Free Audio Captioning
 
 Official code and models for the IEEE SLT 2026 paper
@@ -147,7 +154,7 @@ huggingface/         everything about the published models and the demo
   model_cards/       model cards published with each Hub repo
   space/             demo Space: page, sample-clip builder, deploy script
 notebooks/           Colab demo
-assets/              architecture figure (PNG and PDF)
+assets/              architecture figure (PNG and PDF) and logo files (logo/)
 tests/               offline unit tests (python -m pytest -q)
 ```
 
