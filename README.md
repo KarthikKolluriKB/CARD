@@ -9,6 +9,16 @@ Demo: [listen and compare captions](https://huggingface.co/spaces/KarthikKB1998/
 
 Models: [Hugging Face collection](https://huggingface.co/collections/KarthikKB1998/card-encoder-free-audio-captioning-ieee-slt-2026-6aab0d5d46f574fd376ff1d7)
 
+## Architecture
+
+![CARD training and inference pipelines](assets/card_architecture.png)
+
+*Overview of CARD. During training (left), a frozen CLAP teacher supervises the two student
+components by role: its early, perceptual stages (0-1) distill into the audio projector, and its
+later, semantic stages (2-3) into the LLM's LoRA adapters. At inference (right), the teacher and
+distillation heads are dropped and the LoRA is merged into the LLM, leaving only the projector and
+the LLM, with no audio encoder.* (Paper Fig. 1; vector version: [PDF](assets/card_architecture.pdf).)
+
 ## What CARD is
 
 Most audio captioning systems run a frozen audio encoder (CLAP, EAT, CED, ...) in front of a
@@ -137,6 +147,7 @@ huggingface/         everything about the published models and the demo
   model_cards/       model cards published with each Hub repo
   space/             demo Space: page, sample-clip builder, deploy script
 notebooks/           Colab demo
+assets/              architecture figure (PNG and PDF)
 tests/               offline unit tests (python -m pytest -q)
 ```
 
