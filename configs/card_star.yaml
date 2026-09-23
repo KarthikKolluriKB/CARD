@@ -8,6 +8,7 @@
 
 variant: card_star
 output_dir: outputs/card_star
+seed: 42                          # model initialisation; batch order uses phase1.seed / phase2.seed
 num_workers: 4
 
 model:

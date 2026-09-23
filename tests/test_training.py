@@ -63,6 +63,7 @@ def test_configs_inherit_and_validate():
     clotho = validate_config(load_config(ROOT / "configs" / "clotho" / "card_star.yaml"))
     assert star["distillation"]["projector_stages"] == [0, 1] and star["distillation"]["llm_stages"] == [2, 3]
     assert (star["lora"]["r"], star["lora"]["alpha"], star["lora"]["num_layers"]) == (16, 16, 36)
+    assert star["seed"] == 42 and clotho["seed"] == 42
     p1, p2 = star["phase1"], star["phase2"]
     assert (p1["lr"], p1["warmup_steps"], p1["scheduler"], p1["batch_size"] * p1["grad_accum"] * 2) == \
         (2e-4, 200, "constant_with_warmup", 64)
@@ -86,7 +87,8 @@ class _Frontend(torch.nn.Module):
 class _Teacher:
     def __call__(self, waves):
         g = torch.Generator().manual_seed(0)
-        return [torch.randn(waves.size(0), t, d, generator=g) for t, d in zip((64, 16, 4, 4), CLAP_STAGE_DIMS)]
+        lengths = (64, 16, 4, 4)
+        return [torch.randn(waves.size(0), t, d, generator=g) for t, d in zip(lengths, CLAP_STAGE_DIMS, strict=True)]
 
 
 @pytest.fixture(scope="module")

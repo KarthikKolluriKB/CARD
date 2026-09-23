@@ -90,5 +90,5 @@ class LLMHeads(nn.Module):
         """``num_blocks`` tensors (B, T_audio, llm_dim) -> one (B, T_audio, d_i) tensor per stage."""
         return [
             head(torch.stack(block_hidden_states[start:end]).mean(dim=0))
-            for head, (start, end) in zip(self.heads, self.stage_block_ranges)
+            for head, (start, end) in zip(self.heads, self.stage_block_ranges, strict=True)
         ]

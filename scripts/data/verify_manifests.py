@@ -79,8 +79,10 @@ def main():
         refs = [r["captions"] for r in read_manifest(path)]
         got_sha = hashlib.sha256(json.dumps(refs).encode()).hexdigest()
         ok = sum(map(len, refs)) == n_refs and (sha is None or got_sha == sha)
-        print(f"{'ok' if ok else 'MISMATCH':<8} {'         references in ' + rel:<52} {sum(map(len, refs)):>8,} "
-              f"(paper: {n_refs:,}{'' if sha is None else ', fingerprint ' + ('matches' if got_sha == sha else 'differs')})")
+        fingerprint = "" if sha is None else ", fingerprint " + ("matches" if got_sha == sha else "differs")
+        label = "         references in " + rel
+        print(f"{'ok' if ok else 'MISMATCH':<8} {label:<52} {sum(map(len, refs)):>8,} "
+              f"(paper: {n_refs:,}{fingerprint})")
         failures += not ok
 
     path = args.root / TEXT_MANIFEST

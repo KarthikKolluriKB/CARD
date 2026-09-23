@@ -380,7 +380,7 @@ def load_card(
     llm_dir = model_dir / LLM_SUBDIR
     has_merged = (llm_dir / "config.json").exists() and any(llm_dir.glob("*.safetensors"))
     if mode == "merged" and not has_merged:
-        warnings.warn(f"No merged LLM under {llm_dir}; falling back to mode='adapters'.")
+        warnings.warn(f"No merged LLM under {llm_dir}; falling back to mode='adapters'.", stacklevel=2)
         mode = "adapters"
 
     from transformers import AutoModelForCausalLM, AutoTokenizer

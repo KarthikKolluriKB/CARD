@@ -256,7 +256,8 @@ def load_audio(
     if waveform.size(0) > target_samples:
         warnings.warn(
             f"Audio is {waveform.size(0) / target_sr:.1f} s; CARD was trained on <= "
-            f"{max_duration:.0f} s clips, so only the first {max_duration:.0f} s are used."
+            f"{max_duration:.0f} s clips, so only the first {max_duration:.0f} s are used.",
+            stacklevel=2,
         )
         waveform = waveform[:target_samples]
     elif waveform.size(0) < target_samples:

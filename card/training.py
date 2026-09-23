@@ -363,14 +363,23 @@ def _run_phase(cfg: dict, phase: str, student: CARDStudent, frontend, teacher, t
     return str(Path(cfg["output_dir"]) / phase / f"epoch-{pc['epochs']}")
 
 
+def set_seed(cfg: dict) -> None:
+    """Seed Python, NumPy and PyTorch so model initialisation is reproducible."""
+    from transformers import set_seed as hf_set_seed
+
+    hf_set_seed(int(cfg.get("seed", 42)))
+
+
 def train_phase1(cfg: dict, device: torch.device) -> str:
     log("=" * 60 + "\nPHASE 1: captioning + cross-component distillation\n" + "=" * 60)
+    set_seed(cfg)
     student, frontend, teacher, tokenizer = build_phase1(cfg, device)
     return _run_phase(cfg, "phase1", student, frontend, teacher, tokenizer, device)
 
 
 def train_phase2(cfg: dict, device: torch.device, phase1_ckpt: Optional[str]) -> str:
     log("=" * 60 + "\nPHASE 2: captioning fine-tuning\n" + "=" * 60)
+    set_seed(cfg)
     student, frontend, tokenizer = build_phase2(cfg, device, phase1_ckpt)
     return _run_phase(cfg, "phase2", student, frontend, None, tokenizer, device)
 

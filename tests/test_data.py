@@ -139,7 +139,7 @@ def test_sampler_batches_are_modality_pure_and_rank_aligned(tmp_path, world_size
         assert len(batches) == len(sampler)
         per_rank.append(batches)
 
-    for step in zip(*per_rank):
+    for step in zip(*per_rank, strict=True):
         kinds = {all(i < n_audio for i in b) for b in step}
         assert len(kinds) == 1                                   # same modality on every rank
         assert all(len(b) == 4 for b in step)
