@@ -29,7 +29,7 @@ from typing import List, Optional, Sequence, Union
 import torch
 from safetensors.torch import load_file
 
-from card_model.modeling import (
+from card.modeling import (
     AudioLike,
     AudioProjector,
     build_frontend,

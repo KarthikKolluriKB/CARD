@@ -61,7 +61,7 @@ from safetensors.torch import load_file, save_file
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
-from card_model.hub import (  # noqa: E402
+from card.hub import (  # noqa: E402
     CARD_CONFIG_NAME,
     GENERATION_CONFIG_NAME,
     LLM_SUBDIR,
@@ -71,7 +71,7 @@ from card_model.hub import (  # noqa: E402
     CARDConfig,
     load_card,
 )
-from card_model.modeling import AudioProjector  # noqa: E402
+from card.modeling import AudioProjector  # noqa: E402
 
 VARIANT_LABELS = {
     "card_star": "CARD* (early stages -> projector, later stages -> LLM)",
@@ -177,7 +177,7 @@ def copy_merged_llm(src: Path, dst: Path, base_llm: str, adapter_dirs: List[Path
         if device == "cpu":
             log("WARNING: rebuilding on CPU; PEFT merges bf16 in fp32 there, so the result can "
                 "differ from the GPU-merged model in the last bit. Prefer --device cuda.")
-        from card_model.hub import merge_adapters
+        from card.hub import merge_adapters
 
         model = merge_adapters(base_llm, adapter_dirs, dtype=torch.bfloat16, device=device)
         rebuilt = True
@@ -298,7 +298,7 @@ def render_stub_readme(out: Path, cfg: CARDConfig, args, included_merged: bool) 
         "TODO: replace this stub with the full model card (docs/hf_model_card_template.md).",
         "",
         "```python",
-        "from card_model import load_card",
+        "from card import load_card",
         f"model = load_card(\"KarthikKB1998/{name}\"" + ("" if included_merged else ", mode=\"adapters\"") + ")",
         "print(model.caption(\"clip.wav\"))",
         "```",
@@ -338,7 +338,7 @@ def scan_forbidden(out: Path) -> List[str]:
 
 def check_merge(out: Path, cfg: CARDConfig, device: str) -> bool:
     """Rebuild the LLM from base + adapters and compare with the exported merged shards."""
-    from card_model.hub import merge_adapters
+    from card.hub import merge_adapters
 
     log("check-merge: rebuilding LLM from base + adapters (this loads Qwen3-4B twice)")
     adapters = [out / p for p in (PHASE1_ADAPTER, PHASE2_ADAPTER) if (out / p).is_dir()]

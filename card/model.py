@@ -7,8 +7,8 @@ from typing import Optional
 import torch
 import torch.nn as nn
 
-from card_model.heads import LLMHeads, ProjectorHeads
-from card_model.modeling import AudioProjector, build_hybrid_attention_mask
+from card.heads import LLMHeads, ProjectorHeads
+from card.modeling import AudioProjector, build_hybrid_attention_mask
 
 
 def init_projector_to_match_llm(projector: AudioProjector, llm_embed_table: torch.Tensor) -> None:

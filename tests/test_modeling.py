@@ -12,8 +12,8 @@ from safetensors.torch import load_file, save_file
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from card_model.hub import CARDConfig  # noqa: E402
-from card_model.modeling import AudioProjector, build_hybrid_attention_mask, load_audio  # noqa: E402
+from card.hub import CARDConfig  # noqa: E402
+from card.modeling import AudioProjector, build_hybrid_attention_mask, load_audio  # noqa: E402
 
 
 def test_projector_shape_and_downsampling():

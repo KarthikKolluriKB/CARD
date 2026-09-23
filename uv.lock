@@ -241,7 +241,7 @@ wheels = [
 ]
 
 [[package]]
-name = "card-model"
+name = "card"
 version = "1.0.0"
 source = { editable = "." }
 dependencies = [

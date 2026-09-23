@@ -66,7 +66,7 @@ def load_model() -> None:
     try:
         import torch
 
-        from card_model import load_card
+        from card import load_card
 
         DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
         print(f"[demo] loading {MODEL_ID} on {DEVICE}", flush=True)

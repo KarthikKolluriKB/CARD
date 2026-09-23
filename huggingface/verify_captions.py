@@ -3,7 +3,7 @@
 
 Beam search is deterministic, so a model whose weights equal those behind an evaluation run
 must produce exactly the same caption for every clip. This loads the model with
-``card_model.load_card`` (an export folder or a Hub repo) and compares its captions with the
+``card.load_card`` (an export folder or a Hub repo) and compares its captions with the
 ``results`` list of an ``eval_results.json`` written by that evaluation.
 
     CUDA_VISIBLE_DEVICES=1 python huggingface/verify_captions.py \\
@@ -25,7 +25,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
-from card_model.hub import load_card  # noqa: E402
+from card.hub import load_card  # noqa: E402
 
 
 def main(argv=None) -> int:

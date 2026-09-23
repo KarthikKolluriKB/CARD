@@ -93,7 +93,7 @@ pip install git+https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Capt
 ```
 
 ```python
-from card_model import load_card
+from card import load_card
 
 model = load_card("KarthikKB1998/CARD-Qwen3-4B-AudioCaps", device="cuda")
 print(model.caption("dog_barking.wav"))
