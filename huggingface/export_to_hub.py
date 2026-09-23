@@ -290,7 +290,7 @@ def render_stub_readme(out: Path, cfg: CARDConfig, args, included_merged: bool) 
         "",
         "Encoder-free audio captioning model from \"CARD: Cross-component Audio Representation "
         "Distillation for Encoder-Free Audio Captioning\" (IEEE SLT 2026).",
-        "Code: https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning",
+        "Code: https://github.com/KarthikKolluriKB/CARD",
         "",
         f"Variant: {cfg.paper.get('variant_label', cfg.variant)}. Phase {cfg.phase}"
         + (f", fine-tuned on {dataset}." if cfg.phase == 2 else " checkpoint (before Phase 2)."),

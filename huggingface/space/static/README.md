@@ -24,14 +24,14 @@ This is a static page. The captions were generated beforehand by the released mo
 paper's decoding settings (beam search, 4 beams, at most 40 new tokens). Beam search is
 deterministic, so they are the captions the model produces live for these clips. To caption your
 own audio, run the model in the
-[Colab notebook](https://colab.research.google.com/github/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning/blob/main/notebooks/CARD_demo.ipynb).
+[Colab notebook](https://colab.research.google.com/github/KarthikKolluriKB/CARD/blob/main/notebooks/CARD_demo.ipynb).
 
 CARD has no audio encoder at inference. A 13.2 M-parameter projector turns the log-Mel spectrogram
 into audio tokens, which a Qwen3-4B language model with merged LoRA adapters reads to write the
 caption. During training a frozen CLAP-HTSAT teacher was distilled into the model by component,
 its early stages into the projector and its later stages into the language model.
 
-- Code: https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning
+- Code: https://github.com/KarthikKolluriKB/CARD
 - Each sample clip keeps its original source and license, shown with its caption.
 
 ```bibtex

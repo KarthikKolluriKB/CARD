@@ -53,7 +53,7 @@ model-index:
 
 Encoder-free audio captioning model from the paper
 **"CARD: Cross-component Audio Representation Distillation for Encoder-Free Audio Captioning"**
-(IEEE SLT 2026). Code: https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning
+(IEEE SLT 2026). Code: https://github.com/KarthikKolluriKB/CARD
 
 CARD removes the audio encoder at inference. A 13.2 M-parameter convolutional projector turns a
 log-Mel spectrogram into about 250 audio tokens, which a Qwen3-4B language model (with LoRA
@@ -86,10 +86,10 @@ so the two phases can be studied separately.
 ## Quick start
 
 Try it without installing anything: listen to sample clips on the [demo page](https://huggingface.co/spaces/KarthikKB1998/CARD-Audio-Captioning), or caption
-your own audio in the [Colab notebook](https://colab.research.google.com/github/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning/blob/main/notebooks/CARD_demo.ipynb).
+your own audio in the [Colab notebook](https://colab.research.google.com/github/KarthikKolluriKB/CARD/blob/main/notebooks/CARD_demo.ipynb).
 
 ```bash
-pip install git+https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning
+pip install git+https://github.com/KarthikKolluriKB/CARD
 ```
 
 ```python

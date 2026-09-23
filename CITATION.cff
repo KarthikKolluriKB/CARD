@@ -15,6 +15,7 @@ authors:
     given-names: Ravi
     affiliation: University of Essex
 license: Apache-2.0
+repository-code: "https://github.com/KarthikKolluriKB/CARD"
 preferred-citation:
   type: conference-paper
   title: "CARD: Cross-component Audio Representation Distillation for Encoder-Free Audio Captioning"

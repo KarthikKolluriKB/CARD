@@ -34,7 +34,7 @@ except Exception:  # plain CPU / GPU hardware, or running locally
 HERE = Path(__file__).resolve().parent
 MODEL_ID = os.environ.get("CARD_MODEL_ID", "KarthikKB1998/CARD-Qwen3-4B-AudioCaps")
 SAMPLES_JSON = HERE / "samples" / "samples.json"
-CODE_URL = "https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning"
+CODE_URL = "https://github.com/KarthikKolluriKB/CARD"
 MODEL_URL = f"https://huggingface.co/{MODEL_ID}"
 
 MODEL = None

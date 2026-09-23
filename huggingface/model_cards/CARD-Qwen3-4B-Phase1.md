@@ -25,7 +25,7 @@ datasets:
 
 The **Phase 1 checkpoint** of CARD\* from the paper
 **"CARD: Cross-component Audio Representation Distillation for Encoder-Free Audio Captioning"**
-(IEEE SLT 2026). Code: https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning
+(IEEE SLT 2026). Code: https://github.com/KarthikKolluriKB/CARD
 
 Phase 1 is where the encoder-free student learns to hear: a frozen Qwen3-4B with a rank-16 LoRA
 and a 13.2 M-parameter audio projector are trained on about 276 K audio-caption pairs under the
@@ -57,7 +57,7 @@ There is no merged `llm/` here; the loader rebuilds the Phase 1 model by merging
 ## Quick start
 
 ```bash
-pip install git+https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning
+pip install git+https://github.com/KarthikKolluriKB/CARD
 ```
 
 ```python

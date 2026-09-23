@@ -27,7 +27,7 @@ into audio tokens, which a Qwen3-4B language model with merged LoRA adapters rea
 caption. During training a frozen CLAP-HTSAT teacher was distilled into the model by component,
 its early stages into the projector and its later stages into the language model.
 
-- Code: https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Captioning
+- Code: https://github.com/KarthikKolluriKB/CARD
 - Decoding follows the paper: beam search with 4 beams and at most 40 new tokens.
 - The source and license of each sample clip are shown under it in the app.
 
