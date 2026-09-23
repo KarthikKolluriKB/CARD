@@ -61,7 +61,7 @@ pip install git+https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Capt
 ```
 
 ```python
-from card import load_card
+from card_model import load_card
 
 model = load_card("KarthikKB1998/CARD-Qwen3-4B-Phase1", mode="adapters", device="cuda")
 print(model.caption("clip.wav"))   # works, but see the note above: Phase 2 models caption far better

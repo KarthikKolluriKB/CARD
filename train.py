@@ -13,8 +13,8 @@ from pathlib import Path
 
 import torch
 
-from card.config import load_config, validate_config
-from card.training import (
+from card_model.config import load_config, validate_config
+from card_model.training import (
     get_world_size,
     init_distributed,
     is_distributed,

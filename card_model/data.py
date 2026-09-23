@@ -31,8 +31,8 @@ import torch
 import torch.nn.functional as F
 from torch.utils.data import ConcatDataset, Dataset, Sampler
 
-from card.hub import DEFAULT_SYSTEM_PROMPT
-from card.modeling import load_audio
+from card_model.hub import DEFAULT_SYSTEM_PROMPT
+from card_model.modeling import load_audio
 
 logger = logging.getLogger(__name__)
 

@@ -5,7 +5,7 @@ Two kinds of Space share the same sample clips (``huggingface/space/samples``, b
 
     static  (default, free for every account)  static/index.html + README.md. Shows the caption
             the released model produced for each clip (``expected_caption`` in samples.json).
-    gradio  (needs a PRO account on Hugging Face)  app.py + the ``card`` package; generates
+    gradio  (needs a PRO account on Hugging Face)  app.py + the ``card_model`` package; generates
             captions live.
 
     python huggingface/space/deploy_space.py --space-id KarthikKB1998/CARD-Audio-Captioning --private
@@ -37,7 +37,7 @@ def stage_code(dest: Path, kind: str) -> None:
     else:
         for name in ("app.py", "requirements.txt", "README.md"):
             shutil.copy2(HERE / name, dest / name)
-        shutil.copytree(REPO_ROOT / "card", dest / "card", ignore=shutil.ignore_patterns("__pycache__"))
+        shutil.copytree(REPO_ROOT / "card_model", dest / "card_model", ignore=shutil.ignore_patterns("__pycache__"))
     if (REPO_ROOT / "LICENSE").exists():
         shutil.copy2(REPO_ROOT / "LICENSE", dest / "LICENSE")
 

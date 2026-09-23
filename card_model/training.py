@@ -19,19 +19,19 @@ import torch.distributed as dist
 from safetensors.torch import load_file, save_file
 from torch.utils.data import DataLoader
 
-from card.data import (
+from card_model.data import (
     AudioCaptionDataset,
     HomogeneousBatchSampler,
     build_prompt,
     build_train_dataset,
     collate_mixed,
 )
-from card.heads import LLMHeads, ProjectorHeads
-from card.hub import DEFAULT_USER_PROMPT, CARDConfig, merge_adapters
-from card.losses import llm_distill_loss, projector_distill_loss
-from card.model import CARDStudent, init_projector_to_match_llm
-from card.modeling import AudioProjector, build_frontend, build_hybrid_attention_mask
-from card.teacher import CLAP_STAGE_DEPTHS, CLAP_STAGE_DIMS, ClapTeacher
+from card_model.heads import LLMHeads, ProjectorHeads
+from card_model.hub import DEFAULT_USER_PROMPT, CARDConfig, merge_adapters
+from card_model.losses import llm_distill_loss, projector_distill_loss
+from card_model.model import CARDStudent, init_projector_to_match_llm
+from card_model.modeling import AudioProjector, build_frontend, build_hybrid_attention_mask
+from card_model.teacher import CLAP_STAGE_DEPTHS, CLAP_STAGE_DIMS, ClapTeacher
 
 PROJECTOR_FILE = "audio_projector.safetensors"
 PROJECTOR_HEADS_FILE = "projector_heads.safetensors"

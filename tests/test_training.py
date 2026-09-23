@@ -9,13 +9,13 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from card.config import load_config, validate_config  # noqa: E402
-from card.heads import LLMHeads, ProjectorHeads, allocate_blocks  # noqa: E402
-from card.losses import llm_distill_loss, projector_distill_loss  # noqa: E402
-from card.model import CARDStudent, init_projector_to_match_llm  # noqa: E402
-from card.modeling import AudioProjector  # noqa: E402
-from card.teacher import CLAP_STAGE_DEPTHS, CLAP_STAGE_DIMS  # noqa: E402
-from card.training import batch_losses  # noqa: E402
+from card_model.config import load_config, validate_config  # noqa: E402
+from card_model.heads import LLMHeads, ProjectorHeads, allocate_blocks  # noqa: E402
+from card_model.losses import llm_distill_loss, projector_distill_loss  # noqa: E402
+from card_model.model import CARDStudent, init_projector_to_match_llm  # noqa: E402
+from card_model.modeling import AudioProjector  # noqa: E402
+from card_model.teacher import CLAP_STAGE_DEPTHS, CLAP_STAGE_DIMS  # noqa: E402
+from card_model.training import batch_losses  # noqa: E402
 
 
 @pytest.mark.parametrize("stages, ranges", [
@@ -141,7 +141,7 @@ def test_batch_losses_routing(tiny_llm, projector_stages, llm_stages):
 def test_resolve_checkpoint_layouts(tmp_path):
     from safetensors.torch import save_file
 
-    from card.training import resolve_checkpoint
+    from card_model.training import resolve_checkpoint
 
     state = {k: v.contiguous() for k, v in AudioProjector(n_mels=16, hidden_dim=32, conv_intermediate=8,
                                                            max_audio_len=64).state_dict().items()}

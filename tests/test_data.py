@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts" / "data"))
 
-from card.data import (  # noqa: E402
+from card_model.data import (  # noqa: E402
     CAPTION_SYSTEM_PROMPT,
     CAPTION_USER_PROMPT,
     GENERAL_SYSTEM_PROMPT,

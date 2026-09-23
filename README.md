@@ -90,7 +90,7 @@ pip install git+https://github.com/KarthikKolluriKB/CARD-Encoder-Free-Audio-Capt
 ```
 
 ```python
-from card import load_card
+from card_model import load_card
 
 model = load_card("KarthikKB1998/CARD-Qwen3-4B-AudioCaps", device="cuda")
 print(model.caption("dog_barking.wav"))
@@ -116,7 +116,7 @@ only), `torchaudio`, `soundfile`. The pinned environment is in `pyproject.toml` 
 
 ```
 train.py             entry point: Phase 1, Phase 2, and merging the LoRA adapters
-card/
+card_model/
   modeling.py        AudioProjector, CLAP-matched and legacy mel front ends, hybrid attention mask, audio loading
   model.py           the student: audio projector + LoRA-adapted LLM
   teacher.py         frozen CLAP-HTSAT teacher (stages t0-t3)
