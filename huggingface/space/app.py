@@ -95,7 +95,7 @@ ARROW = ('<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 
 HERO = f"""
 <div class="hero">
   <div class="eyebrow">IEEE SLT 2026</div>
-  <h1 class="hero-title">CARD <span>audio captioning</span></h1>
+  <h1 class="hero-title"><svg class="hero-mark" viewBox="110.74 292.69 144.28 90.69" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-width="12.37"><path class="amber" d="M116.93 323.61V352.46M139.6 314.33V361.74"/><path class="indigo" d="M162.27 306.09V369.98M184.94 298.87V377.2M209.68 316.39H248.84M209.68 338.03H238.54M209.68 359.68H228.23"/></g></svg>CARD <span>audio captioning</span></h1>
   <p class="hero-sub">Cross-component Audio Representation Distillation for Encoder-Free Audio
   Captioning. Listen to a clip, press Generate, and compare the model's caption with what human
   annotators wrote.</p>
@@ -237,6 +237,11 @@ footer { opacity: .7; }
   color: #6366f1; background: rgba(99, 102, 241, .12); border: 1px solid rgba(99, 102, 241, .3);
 }
 .hero-title { margin: 14px 0 8px !important; font-size: 2.6rem !important; line-height: 1.05; font-weight: 800; letter-spacing: -.02em; }
+.hero-mark { height: .8em; width: auto; margin-right: .3em; vertical-align: -.02em; }
+.hero-mark .amber { stroke: #D07A22; }
+.hero-mark .indigo { stroke: #4543C4; }
+.dark .hero-mark .amber { stroke: #F2A650; }
+.dark .hero-mark .indigo { stroke: #A3A6FF; }
 .hero-title span {
   background: linear-gradient(90deg, #6366f1, #8b5cf6 55%, #ec4899);
   -webkit-background-clip: text; background-clip: text; color: transparent;

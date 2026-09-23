@@ -9,6 +9,7 @@ app_file: app.py
 pinned: false
 license: apache-2.0
 short_description: Encoder-free audio captioning demo (CARD, IEEE SLT 2026)
+thumbnail: https://raw.githubusercontent.com/KarthikKolluriKB/CARD/main/assets/logo/card-social-preview.png
 models:
   - KarthikKB1998/CARD-Qwen3-4B-AudioCaps
 ---
