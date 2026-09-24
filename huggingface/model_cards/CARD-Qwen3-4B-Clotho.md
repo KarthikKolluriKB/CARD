@@ -100,6 +100,14 @@ your own audio in the [Colab notebook](https://colab.research.google.com/github/
 pip install git+https://github.com/KarthikKolluriKB/CARD
 ```
 
+On NVIDIA RTX 50-series (Blackwell) GPUs, install the CUDA 12.8 build of PyTorch first (tested on an
+RTX 5090, where the model gives the same captions as the paper run):
+
+```bash
+pip install torch==2.7.1 torchaudio==2.7.1 --index-url https://download.pytorch.org/whl/cu128
+pip install git+https://github.com/KarthikKolluriKB/CARD
+```
+
 ```python
 from card import load_card
 
