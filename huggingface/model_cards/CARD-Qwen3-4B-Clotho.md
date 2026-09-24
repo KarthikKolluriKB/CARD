@@ -32,8 +32,8 @@ model-index:
           name: Automated Audio Captioning
         dataset:
           type: clotho
-          name: Clotho evaluation
-          split: evaluation
+          name: Clotho v2.1 (validation split)
+          split: validation
         metrics:
           - type: cider
             name: CIDEr-D
@@ -133,7 +133,9 @@ Requirements: `torch==2.7.1`, `transformers==4.53.1`, `peft==0.18.1` (only for `
 
 ## Results
 
-Clotho evaluation split (1,045 clips), beam 4, all values in % (paper Table II). Results are
+1,045 clips of the official Clotho v2.1 validation split, the evaluation set used for the paper, with
+the reference captions of each clip split on periods (4,680 references; see
+`scripts/data/prepare_clotho.py` in the GitHub repo). Beam 4, all values in % (paper Table II). Results are
 Phase-2-fine-tuned on the Clotho training set, not zero-shot. SLAM-AAC keeps the frozen CLAP
 encoder at inference; the CARD variants remove it and differ only in where the teacher is distilled.
 

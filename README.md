@@ -94,8 +94,6 @@ Three models from the paper are released on the Hugging Face Hub under
 | [`CARD-Qwen3-4B-Clotho`](https://huggingface.co/KarthikKB1998/CARD-Qwen3-4B-Clotho) | CARD\* after Phase 2 on Clotho (CIDEr-D 27.5) | merged LLM + projector + Phase 1 and Phase 2 LoRA adapters | 8.4 GB |
 | [`CARD-Qwen3-4B-Phase1`](https://huggingface.co/KarthikKB1998/CARD-Qwen3-4B-Phase1) | the shared Phase 1 checkpoint both models start from | Phase 1 LoRA adapter + projector + distillation heads | 0.2 GB |
 
-Weights are being uploaded; a repo that is not yet visible will appear shortly.
-
 ## Quick start
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/KarthikKolluriKB/CARD/blob/main/notebooks/CARD_demo.ipynb)
