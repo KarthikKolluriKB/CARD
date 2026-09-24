@@ -77,3 +77,39 @@ def test_config_roundtrip_and_partial_merge(tmp_path):
     back = CARDConfig.from_file(tmp_path / "card_config.json")
     assert back.to_dict() == cfg.to_dict()
     assert json.loads((tmp_path / "card_config.json").read_text())["lora"]["r"] == 16
+
+
+def test_load_card_downloads_adapters_when_repo_has_no_merged_llm(tmp_path, monkeypatch):
+    import card.hub as hub
+
+    root = tmp_path / "snapshot"
+    adapter = root / "adapters" / "phase1_lora"
+    adapter.mkdir(parents=True)
+    (adapter / "adapter_config.json").write_text("{}", encoding="utf-8")
+    CARDConfig.from_dict({"phase": 1}).save(root / "card_config.json")
+    proj = AudioProjector(n_mels=64, hidden_dim=32, conv_intermediate=8, max_audio_len=16)
+    save_file({k: v.contiguous() for k, v in proj.state_dict().items()}, str(root / "audio_projector.safetensors"))
+
+    modes = []
+
+    def fake_resolve(repo, mode="merged", **kwargs):
+        modes.append(mode)
+        if mode == "adapters":  # the adapter weights only arrive with the adapter download patterns
+            (adapter / "adapter_model.safetensors").write_bytes(b"")
+        return root
+
+    class Stop(Exception):
+        pass
+
+    def fake_merge(base_llm, adapter_dirs, **kwargs):
+        raise Stop(adapter_dirs)
+
+    frontend = torch.nn.Identity()
+    frontend.n_mels = 64
+    monkeypatch.setattr(hub, "resolve_model_dir", fake_resolve)
+    monkeypatch.setattr(hub, "build_frontend", lambda *a, **k: frontend)
+    monkeypatch.setattr(hub, "merge_adapters", fake_merge)
+    with pytest.warns(UserWarning, match="falling back"), pytest.raises(Stop) as stopped:
+        hub.load_card("user/phase1-repo", device="cpu")
+    assert modes == ["merged", "adapters"]
+    assert stopped.value.args[0] == [adapter]

@@ -290,6 +290,10 @@ def resolve_model_dir(
     return Path(root) / subfolder if subfolder else Path(root)
 
 
+def _has_adapter(path: Path) -> bool:
+    return (path / "adapter_config.json").exists() and any(path.glob("adapter_model.*"))
+
+
 def merge_adapters(base_llm: str, adapter_dirs: Sequence[Path], dtype: torch.dtype,
                    device: Union[str, torch.device], token: Optional[str] = None):
     """base -> merge adapter_dirs[0] -> merge adapter_dirs[1] -> ... (Phase 1 first)."""
@@ -382,14 +386,16 @@ def load_card(
     if mode == "merged" and not has_merged:
         warnings.warn(f"No merged LLM under {llm_dir}; falling back to mode='adapters'.", stacklevel=2)
         mode = "adapters"
+        if not Path(repo_or_path).is_dir():
+            model_dir = resolve_model_dir(repo_or_path, mode="adapters", subfolder=subfolder,
+                                          revision=revision, token=token, cache_dir=cache_dir)
 
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     if mode == "merged":
         llm = AutoModelForCausalLM.from_pretrained(str(llm_dir), torch_dtype=dtype).to(device)
     else:
-        adapters = [model_dir / p for p in (PHASE1_ADAPTER, PHASE2_ADAPTER)
-                    if (model_dir / p / "adapter_config.json").exists()]
+        adapters = [model_dir / p for p in (PHASE1_ADAPTER, PHASE2_ADAPTER) if _has_adapter(model_dir / p)]
         if not adapters:
             raise FileNotFoundError(f"No PEFT adapters found under {model_dir / 'adapters'}")
         if config.phase == 2 and len(adapters) != 2:
